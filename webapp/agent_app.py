@@ -28,16 +28,19 @@ def setup_tools():
     tools.append(NoOpTool())
 
     # Step3: エージェントが Wikipedia を検索できるようにしてみよう（Stable Diffusionについて教えて）
-    # wikipedia_tools = load_tools(["wikipedia"])
-    # tools.extend(wikipedia_tools)
+    wikipedia_tools = load_tools(["wikipedia"])
+    tools.extend(wikipedia_tools)
+
+    terminal_tools = load_tools(["terminal"])
+    tools.extend(terminal_tools)
 
     # Step4: Zapier NLA で Google カレンダーに予定を登録させてみよう（明日の13時に会議の予定を登録して）
     # zapier_tools = load_zapier_tools_for_openai_functions_agent()
     # tools.extend(zapier_tools)
 
     # Step5: Streamlit 上の部屋の電気・扇風機（の画像）を操作させよう
-    # streamlit_image_tools = load_streamlit_image_tools()
-    # tools.extend(streamlit_image_tools)
+    streamlit_image_tools = load_streamlit_image_tools()
+    tools.extend(streamlit_image_tools)
 
     # 講師用
     # remote_light_tool = ToogleRemoteLightTool(
@@ -54,7 +57,8 @@ def setup_tools():
 # エージェントを作成する関数
 def create_agent(history: StreamlitChatMessageHistory):
     # LLMの準備
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, streaming=True)
+    # llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, streaming=True)
+    llm = ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0, streaming=True)
 
     # 会話履歴を使う準備
     memory = ConversationBufferMemory(
@@ -112,10 +116,11 @@ if prompt:
 # サイドバー
 with st.sidebar:
     # APIキーの入力欄を表示
-    os.environ["OPENAI_API_KEY"] = st.text_input("OpenAI API キー", type="password")
-    os.environ["ZAPIER_NLA_API_KEY"] = st.text_input(
-        "Zapier NLA API キー", type="password"
-    )
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+    # os.environ["OPENAI_API_KEY"] = st.text_input("OpenAI API キー", type="password")
+    # os.environ["ZAPIER_NLA_API_KEY"] = st.text_input(
+    # "Zapier NLA API キー", type="password"
+    # )
 
     # 画像を表示
     if st.session_state.is_light_on:

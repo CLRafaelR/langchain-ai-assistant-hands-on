@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "langchain-ai-assistant-hands-on"
+version = "0.1.0"
+description = ""
+authors = ["CLRafaelR <ogawa.phiz@gmail.com>"]
+readme = "README.md"
+packages = [{include = "langchain_ai_assistant_hands_on"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "1.27.1"
+langchain = "0.0.306"
+openai = "0.28.1"
+wikipedia = "1.4.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.26.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
