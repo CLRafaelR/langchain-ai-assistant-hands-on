@@ -116,6 +116,7 @@ if prompt:
 # サイドバー
 with st.sidebar:
     # APIキーの入力欄を表示
+    # print(os.getenv("OPENAI_API_KEY"))
     os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
     # os.environ["OPENAI_API_KEY"] = st.text_input("OpenAI API キー", type="password")
     # os.environ["ZAPIER_NLA_API_KEY"] = st.text_input(
