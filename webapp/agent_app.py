@@ -90,6 +90,13 @@ if "is_fan_on" not in st.session_state:
 # Streamlitのセッションに自動で会話履歴が保存されるよう準備
 history = StreamlitChatMessageHistory()
 
+# CSSを適用
+with open("assets\style.css") as css:
+    st.markdown(
+        f"<style>{css.read()}</style>",
+        unsafe_allow_html=True,
+    )
+
 # タイトルを表示
 st.title("My AI Assistant")
 
@@ -112,6 +119,15 @@ if prompt:
 
         response = agent_chain.run(prompt, callbacks=[callback])
         st.write(response)
+
+        print(
+            "## ユーザープロンプト",
+            prompt,
+            "## LLMの出力結果",
+            response,
+            "-" * 3,
+            sep="\n\n",
+        )
 
 # サイドバー
 with st.sidebar:
