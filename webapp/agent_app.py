@@ -18,6 +18,10 @@ from customtools import (
     load_zapier_tools_for_openai_functions_agent,
 )
 
+import datetime
+
+dt_now = datetime.datetime.now()
+
 
 # エージェントが使用するツールを準備する関数
 def setup_tools():
@@ -120,14 +124,46 @@ if prompt:
         response = agent_chain.run(prompt, callbacks=[callback])
         st.write(response)
 
+        now = dt_now.strftime("%Y%m%d_%H%M_%S")
+
         print(
-            "## ユーザープロンプト",
+            "# ユーザープロンプト",
             prompt,
-            "## LLMの出力結果",
+            "# LLMの出力結果",
             response,
             "-" * 3,
             sep="\n\n",
         )
+
+        with open(
+            f"../log/inputs/{now}.md",
+            "w",
+            encoding="utf-8",
+        ) as file:
+            file.write(prompt)
+
+        with open(
+            f"../log/outputs/{now}.md",
+            "w",
+            encoding="utf-8",
+        ) as file:
+            file.write(response)
+
+        with open(
+            f"../log/threads/{now}.md",
+            "w",
+            encoding="utf-8",
+        ) as file:
+            file.write(
+                f"""# ユーザープロンプト
+
+{prompt}
+
+# LLMの出力結果
+
+{response}"""
+            )
+
 
 # サイドバー
 with st.sidebar:
