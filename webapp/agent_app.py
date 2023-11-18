@@ -1,6 +1,7 @@
 import os
 
 import streamlit as st
+import openai
 from langchain.agents import AgentType, initialize_agent, load_tools
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
@@ -62,7 +63,12 @@ def setup_tools():
 def create_agent(history: StreamlitChatMessageHistory):
     # LLMの準備
     # llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, streaming=True)
-    llm = ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0, streaming=True)
+    llm = ChatOpenAI(
+        model_name="gpt-4-1106-preview",
+        # model_name="gpt-4-32k-0613",
+        temperature=0,
+        streaming=True,
+    )
 
     # 会話履歴を使う準備
     memory = ConversationBufferMemory(
@@ -83,6 +89,11 @@ def create_agent(history: StreamlitChatMessageHistory):
         },
     )
 
+
+models = dict(openai.Model.list())
+for i in models["data"]:
+    if i["id"].startswith("gpt"):
+        print(i["id"])
 
 # Streamlitのセッションに保存するデータ
 if "is_light_on" not in st.session_state:
