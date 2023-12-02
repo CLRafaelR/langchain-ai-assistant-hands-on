@@ -126,14 +126,14 @@ if prompt:
 
         now = dt_now.strftime("%Y%m%d_%H%M_%S")
 
-        print(
-            "# ユーザープロンプト",
-            prompt,
-            "# LLMの出力結果",
-            response,
-            "-" * 3,
-            sep="\n\n",
-        )
+        # print(
+        # "# ユーザープロンプト",
+        # prompt,
+        # "# LLMの出力結果",
+        # response,
+        # "-" * 3,
+        # sep="\n\n",
+        # )
 
         with open(
             f"../log/inputs/{now}.md",
